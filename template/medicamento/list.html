@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+            <!-- Barra de navegación -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="{% url 'core:home' %}">Sistema Médico</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href={% url 'core:home' %}>Inicio <span class="sr-only"></span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href={% url 'core:doctor_list' %}>Doctores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href={% url 'medicines:medicamento_list' %}>Medicamentos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contacto</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary text-white" href="#">Iniciar Sesión</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+    <div class="container mt-5">
+        <h1>{{ title1 }}</h1>
+        <a href="{% url 'medicines:medicamento_create' %}" class="btn btn-primary mb-3">Añadir Medicamento</a>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for medicamento in medicamentos %}
+                    <tr>
+                        <td>{{ medicamento.id }}</td>
+                        <td>{{ medicamento.nombre }}</td>
+                        <td>{{ medicamento.descripcion }}</td>
+                        <td>{{ medicamento.precio }}</td>
+                        <td>{{ medicamento.stock }}</td>
+                        <td>
+                            <a href="{% url 'medicines:medicamento_update' medicamento.id %}" class="btn btn-warning btn-sm">Editar</a>
+                            <a href="{% url 'medicines:medicamento_delete' medicamento.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">No hay medicamentos disponibles.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
